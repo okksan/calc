@@ -1,0 +1,819 @@
+<html lang="ru">
+   <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style type="text/css">.found,
+        .wrapper_flex {
+            display: -webkit-box;
+            display: -ms-flexbox
+        }
+
+        .found,
+        .wrapper_center {
+            -webkit-box-pack: center
+        }
+
+        .header__content,
+        .header__wrapper,
+        .me__left {
+            position: relative
+        }
+
+        .content h1,
+        .content h2,
+        .content h3,
+        .content h4,
+        .content h5,
+        .content h6,
+        .content__title,
+        .found__wrapper,
+        .info__text,
+        .inst p,
+        .inst__center ul {
+            text-align: center
+        }
+
+        .content::after,
+        .header__content::after,
+        .me__left::after {
+            content: ''
+        }
+
+        .inst__center ul,
+        .me__list,
+        .pagination ul,
+        .social__list {
+            list-style-type: none
+        }
+
+        .all__link,
+        .journal__link,
+        .journal__title a,
+        .matrix__button,
+        .pagination ul li a {
+            text-decoration: none
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            min-width: 320px;
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .content,
+        .wrapper {
+            width: 100%;
+            margin: 0 auto
+        }
+
+        .wrapper {
+            max-width: 1170px
+        }
+
+        @media screen and (max-width:1170px) {
+            .wrapper {
+                padding-left: 10px;
+                padding-right: 10px
+            }
+        }
+
+        .matrix,
+        .matrix__input {
+            text-align: center
+        }
+
+        .matrix__title {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin: 0;
+            padding: 15px 0 10px
+        }
+
+        .matrix__title span {
+            font-weight: 400
+        }
+
+        .matrix__text {
+            padding: 0;
+            margin: 0;
+            font-size: 1.425em;
+            font-weight: 300;
+            color: #000
+        }
+
+        .matrix__subtitle {
+            font-size: 1.8em;
+            font-weight: 300;
+            color: #000;
+            margin: 0;
+            padding-top: 50px;
+            padding-bottom: 30px
+        }
+
+        .matrix__button {
+            display: block;
+            max-width: 400px;
+            width: 80%;
+            margin: 0 auto;
+            background: #78e47de0;
+            transition: 0.5s;
+            font-size: 1.49375em;
+            border: none;
+            border-radius: 3px;
+            color: #000;
+            line-height: 65px;
+            cursor: pointer;
+        }
+
+        .matrix__button:hover {
+            background: #aaf3ade0 !important;
+        }
+
+        .matrix__button.disabled,
+        .modal {
+            display: none
+        }
+
+        .matrix__button:hover {
+            background-color: #353535
+        }
+
+        .matrix__button:active {
+            background-color: #2e2e2e
+        }
+
+        .matrix__small {
+            font-size: 1.08125em;
+            font-weight: 300;
+            padding-top: 30px;
+            margin: 0
+        }
+
+        .matrix__form {
+            padding-top: 30px;
+            padding-bottom: 15px;
+            max-width: 550px;
+            width: 100%;
+            margin: 0 auto
+        }
+
+        .matrix__input {
+            margin-bottom: 10px;
+            width: 100%;
+            -ms-flex-preferred-size: 100%;
+            flex-basis: 100%;
+            height: 40px;
+            border: none;
+            border-bottom: 1px solid #000;
+            color: #000;
+            font-weight: 300;
+            outline: none;
+            font-size: 1.125em
+        }
+
+        .matrix__button_wrap button:focus {
+            border: none;
+            outline: none;
+        }
+
+        .pagination ul,
+        .result__wrap {
+            display: -webkit-box;
+            display: -ms-flexbox
+        }
+
+        .result {
+            position: relative;
+            transition: height .25s
+        }
+
+        .result__image,
+        .result__loader {
+            position: absolute;
+            left: 0;
+            right: 0
+        }
+
+        .result__loader {
+            top: 0;
+            opacity: 0;
+            display: none;
+            bottom: 0;
+            background-color: #fff;
+            transition: opacity .25s;
+            z-index: 2
+        }
+        /*
+        .result__image {
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            margin: 0 auto;
+            width: 64px;
+            height: 64px;
+            /*background-image: url(../img/preloader.gif)
+        }
+        */
+        .result__hidden {
+            position: relative
+        }
+
+        .result__form {
+            display: none
+        }
+
+        .result.loader {
+            min-height: 200px
+        }
+
+        .result.loader .result__loader {
+            display: block;
+            opacity: 1
+        }
+
+        .result.loader-fade .result__loader {
+            opacity: 0
+        }
+
+        .result.show .result__hidden {
+            display: block;
+            opacity: 1
+        }
+
+        .result__wrap {
+            display: flex;
+            color: #000;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 0px 0
+        }
+
+        .result__big .result__row,
+        .result__row {
+            display: -webkit-box;
+            display: -ms-flexbox
+        }
+
+        .result__left {
+            width: 90%;
+            -ms-flex-preferred-size: 90%;
+            flex-basis: 90%
+        }
+
+        .result__right {
+            width: 10%;
+            background: #fff;
+            -ms-flex-preferred-size: 10%;
+            flex-basis: 10%
+        }
+
+        .result__right .result__item_full {
+            background: #78e47de0;
+            border: 1px #000 solid;
+            /*    margin:3px 0;*/
+        }
+
+        .result__big {
+            padding: 10px 20px 20px;
+            text-align: left;
+            height: 130px;
+            font-size: 18px;
+            background: #78e47de0;
+        }
+
+        .result__big .result__row {
+            line-height: 35px;
+            display: flex;
+            -webkit-box-pack: start;
+            -ms-flex-pack: start;
+            justify-content: space-between;
+        }
+
+        .result__answer,
+        .result__info {
+            display: inline-block;
+            font-size: 1.0375em;
+            font-weight: 400;
+            color: #000
+        }
+
+        .result__info { 
+            -ms-flex-preferred-size: 120px;
+            flex-basis: 200px
+        }
+
+        .result__row {
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .result__item {
+            width: 33.33333%;
+            -ms-flex-preferred-size: 33.33333%;
+            flex-basis: 33.33333%;
+            height: 100px;
+            border: 1px solid #000;
+            opacity: 1;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            transition: opacity .25s;
+            margin: 2px;
+            background: #aaf3ade0;
+        }
+
+        .result__item h4,
+        .result__item p {
+            margin: 0;
+            font-size: 1.06875em;
+            color: #000;
+            font-weight: 400
+        }
+
+        .result__item:hover {
+            opacity: 1
+        }
+
+        .result__item:first-child {
+            margin-left: 0
+        }
+
+        .result__item:last-child {
+            margin-right: 0
+        }
+
+        .result__item h4 {
+            padding: 0
+        }
+
+        .result__item p {
+            -ms-flex-preferred-size: 100%;
+            flex-basis: 100%;
+            padding: 10px 0 0
+        }
+
+        .result__item_full {
+            width: 100%;
+            -ms-flex-preferred-size: 100%;
+            flex-basis: 100%;
+            background-color: #aaf3ade0;
+            opacity: 1;
+            transition: all .25s;
+            border-color: #f0f0f0;
+            margin-bottom: 0px;
+            border: 1px #ccc solid;
+            margin-bottom: 3px;
+        }
+
+        .result__item_full:first-child {
+            height: 130px;
+            position: relative;
+            right: -2px;
+            margin: 0 0 0px 0px
+        }
+
+        .result__item_full .result__context {
+            transition: all .25s;
+            font-weight: bold;
+            opacity: 1
+        }
+
+        .result__item_full:hover {
+            border-color: #000
+        }
+
+        .result__item_full:hover .result__context {
+            opacity: 1
+        }
+
+        @media screen and (max-width:992px) {
+            .result__row {
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap
+            }
+            .result__item,
+            .result__item_full,
+            .result__item_full:first-child {
+                margin: 0
+            }
+            .result__wrap {
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap
+            }
+            .result__context {
+                height: auto
+            }
+            .result__context h4 {
+                padding-top: 10px
+            }
+            .result__context p {
+                padding: 10px 0
+            }
+        }
+
+        @media screen and (max-width: 1024px) {
+            .result__right {
+                flex-basis: 12%;
+            }
+            .result__left {
+                flex-basis: 88%;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .result__big .result__row{
+                justify-content: flex-start;
+            }
+            
+            .result__item,
+            .result__right .result__item_full {
+                border: 1px #ccc solid !important;
+            }
+            .result__item_full:first-child {
+                height: 130px;
+                position: relative;
+                right: 0px;
+            }
+            .result__answer,
+            .result__info,
+            .result__item h4 {
+                font-size: .75em
+            }
+            .result__info {
+                flex-basis: auto;
+                margin-right: 30px;
+            }
+            .result__left {
+                -ms-flex-preferred-size: 76%;
+                flex-basis: 76%
+            }
+            .result__right {
+                -ms-flex-preferred-size: 24%;
+                flex-basis: 24%
+            }
+            .matrix__wrapper {
+                padding: 0
+            }
+            .result__item p {
+                font-size: .875em
+            }
+        }
+    </style>
+    
+    <title>Квадрат Пифагора</title>
+    <script
+	    src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+		crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" 
+        integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw=="
+        crossorigin="anonymous" 
+        referrerpolicy="no-referrer">
+    </script>
+
+    <script>"use strict";
+        function clearDate() {
+            date = "", dateArray = [], secondNumber = [], matrix = []
+        }
+
+        function replaceDate() {
+            date = $(".matrix__input").val();
+            var e = date.split(".");
+            e.forEach(function(e, t) {
+                var r = e.split("");
+                dateArray = dateArray.concat(r)
+            })
+        }
+
+        function clearArray(e) {
+            return 0 == e[0] && e.splice(0, 1), 0 == e[1] && e.splice(1, 1), 0 == e[2] && e.splice(2, 1), e
+        }
+
+        function secondNumbers() {
+            secondNumber[0] = firstSecondNumber(), secondNumber[1] = secondSecondNumber(secondNumber[0]), secondNumber[2] = thirdSecondNumber(), secondNumber[3] = secondSecondNumber(secondNumber[2])
+        }
+
+        function firstSecondNumber() {
+            var e = 0;
+            return dateArray.forEach(function(t, r) {
+                e += parseInt(t, 10)
+            }), e
+        }
+
+        function secondSecondNumber(e) {
+            var t = 0,
+                r = e.toString().split("");
+            return r.forEach(function(e, r) {
+                t += parseInt(e, 10)
+            }), t
+        }
+
+        function thirdSecondNumber() {
+            var e = secondNumber[0],
+                t = Math.abs(e - 2 * parseInt(dateArray[0], 10));
+            return t
+        }
+
+        function toInteger() {
+            var e = [];
+            return fullNumbers.forEach(function(t, r) {
+                var a = t.toString(),
+                    n = a.split("");
+                n.forEach(function(t, r) {
+                    var a = parseInt(t, 10);
+                    e = e.concat(a)
+                })
+            }), e
+        }
+
+        function getMatrix() {
+            for (var e = [], t = [], r = 1; r <= 9; r++) e[r - 1] = "", t[r - 1] = 0, fullNumbers.forEach(function(a, n) {
+                a == r && (e[r - 1] += "" + r, t[r - 1]++)
+            }), "" == e[r - 1] && (e[r - 1] = 0);
+            return e[9] = t[2] + t[4] + t[6], e[10] = t[3] + t[4] + t[5], e[11] = t[1] + t[4] + t[7], e[12] = t[0] + t[3] + t[6], e[13] = t[2] + t[5] + t[8], e
+        }
+
+        function destinyNumber() {
+            var e = 0;
+            e = secondNumber[1] == 11 ? 11 : secondSecondNumber(secondNumber[1])
+            return e
+        }
+
+        function getLoader() {
+            $(".result").addClass("loader")
+        }
+
+        function deleteLoader() {
+            setTimeout(function() {
+                $(".result").addClass("loader-fade")
+            }, 500), setTimeout(function() {
+                $(".result").removeClass("loader loader-fade"), $(".result").addClass("show")
+            }, 250)
+        }
+
+        function showMatrix() {
+            var e = secondNumber.join();
+            $(".result__answer[data-answer=second-number]").text(e), $(".result__answer[data-answer=date]").text(date), $(".result__answer[data-answer=destiny-number]").text(destiny), matrix.forEach(function(e, t) {
+                $(".result__item p[data-index=" + t + "]").text(e || "Пусто")
+            })
+            go_new_num();
+        }
+
+        function getLinks() {
+            $("input[name=matrix]").val(matrix), $("input[name=dates]").val(date), $("input[name=destiny]").val(destiny)
+        }
+
+        function getForm() {
+            $(".result__form").show();
+        }
+        var price = {},
+            res = {},
+            social = {},
+            date = "",
+            dateArray = [],
+            secondNumber = [],
+            fullNumbers = [],
+            matrix = [],
+            destiny = 0;
+
+        $(document).ready(function() {
+            $(".matrix_date").mask("00.00.0000")
+            
+            $(".matrix__button_wrap button").click(
+                function(e) {
+                    e.preventDefault()
+                    $(".matrix_date").val().length && (getLoader(), clearDate(), replaceDate(), dateArray = clearArray(dateArray), secondNumbers(), fullNumbers = dateArray.concat(secondNumber), fullNumbers = toInteger(), matrix = getMatrix(), destiny = destinyNumber(), showMatrix(), getLinks(), deleteLoader(), getForm())
+            })
+            $('.nav-for-page a').click(function(e) {
+                e.preventDefault();
+                var _href = $(this).attr("href");
+                $("html, body").animate({ scrollTop: $(_href).offset().top + "px" });
+                return false;
+            })
+            $('#top').click(function() {
+                $('html, body').animate({ scrollTop: '0px' });
+            });
+        }), $(".modal__open").click(function(e) {
+            var t = $(this).attr("data-theme");
+            $(".modal__title").text(t), $(".modal").fadeIn()
+        }), $(document).mouseup(function(e) {
+            var t = ($(".modal"), $(".modal__wrapper"));
+            t.is(e.target) || 0 !== t.has(e.target).length || $(".modal").fadeOut()
+        });
+
+        function go_new_num() {
+
+            document.querySelector('.d_p4').innerHTML = calc_new_num('.kv_2', '.kv_5', '.kv_8');
+        }
+
+        function calc_new_num(a, b, c) {
+            let num1, num2, num3;
+            num1 = document.querySelector(a).innerHTML;
+            num1.trim();
+            num1 = check(num1);
+            num2 = document.querySelector(b).innerHTML;
+            num2.trim();
+            num2 = check(num2);
+            num3 = document.querySelector(c).innerHTML;
+            num3.trim();
+            num3 = check(num3);
+
+            function check(num) {
+                if (num == 'Пусто') {
+                    return ''
+                } else {
+                    return num
+                }
+
+            }
+            let my_out = num1.length + num2.length + num3.length
+            return my_out
+        }
+    </script>
+   </head>
+   <body>
+      <div class="matrix">
+         <h2 class="matrix__title">Квадрат Пифагора</h2>
+         <div class="wrapper matrix__wrapper">
+            <div class="matrix__form">
+                <input class="matrix__input matrix_date" placeholder="Введите дату рождения" maxlength="10">
+               <div class="matrix__button_wrap"><button class="matrix__button">Рассчитать</button></div>
+            </div>
+            <div class="result">
+               <div class="result__loader">
+                  <div class="result__image"> </div>
+               </div>
+               <div class="result__hidden">
+                  <p class="matrix__text"> </p>
+                  <div class="result__wrap">
+                     <div class="result__left">
+                        <div class="result__big">
+                           <div class="result__row result__flex">
+                              <div class="result__info">Дата рождения</div>
+                              <div class="result__answer" data-answer="date"> </div>
+                           </div>
+                           <div class="result__row result__flex">
+                              <div class="result__info">Доп. числа</div>
+                              <div class="result__answer" data-answer="second-number"> </div>
+                           </div>
+                           <div class="result__row result__flex">
+                              <div class="result__info">Число судьбы</div>
+                              <div class="result__answer" data-answer="destiny-number"> </div>
+                           </div>
+                        </div>
+                        <div class="result__cube">
+                           <div class="result__row">
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Характер</h4>
+                                    <p data-index="0" class="kv_1"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Здоровье</h4>
+                                    <p data-index="3" class="kv_2"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Удача</h4>
+                                    <p data-index="6" class="kv_3"> </p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="result__row">
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Энергия</h4>
+                                    <p data-index="1" class="kv_4"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Логика</h4>
+                                    <p data-index="4" class="kv_5"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Долг</h4>
+                                    <p data-index="7" class="kv_6"> </p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="result__row">
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Интерес</h4>
+                                    <p data-index="2" class="kv_7"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Труд</h4>
+                                    <p data-index="5" class="kv_8"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Память</h4>
+                                    <p data-index="8" class="kv_9"> </p>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="result__row">
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4></h4>
+                                    <p class="d_p3"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4>Быт</h4>
+                                    <p data-index="10" class="d_p4"> </p>
+                                 </div>
+                              </div>
+                              <div class="result__item">
+                                 <div class="result__context">
+                                    <h4></h4>
+                                    <p class="d_p2"> </p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="result__right">
+                        <div class="result__item result__item_full">
+                           <div class="result__context">
+                              <h4>Темперамент</h4>
+                              <p data-index="9" class="kv_10"> </p>
+                           </div>
+                        </div>
+                        <div class="result__item result__item_full">
+                           <div class="result__context">
+                              <h4>Цель</h4>
+                              <p data-index="12" class="kv_11"> </p>
+                           </div>
+                        </div>
+                        <div class="result__item result__item_full">
+                           <div class="result__context">
+                              <h4>Семья</h4>
+                              <p data-index="11" class="kv_12"> </p>
+                           </div>
+                        </div>
+                        <div class="result__item result__item_full">
+                           <div class="result__context">
+                              <h4>Привычки</h4>
+                              <p data-index="13" class="kv_13"> </p>
+                           </div>
+                        </div>
+                            <div class="result__item result__item_full" style="background: #aaf3ade0;">
+                        <div class="result__context">
+                           <h4></h4>
+                           <p class="d_p1"> </p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div at-magnifier-wrapper="">
+        <div class="at-theme-light">
+            <div class="at-base notranslate" translate="no">
+                <div class="Z1-AJ" style="top: 0px; left: 0px;">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
